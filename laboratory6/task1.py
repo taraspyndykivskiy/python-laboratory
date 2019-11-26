@@ -11,22 +11,37 @@ def init():
 def number_validator(prompt, pattern):
 	number=int(validator(prompt, pattern))
 	while number<=0:
+		print("\nВи ввели неправильне значення!")
 		number=int(validator(prompt, pattern))
 	return number
 
 def validator(prompt, pattern):
-	data=(input(prompt))
+	data=(input("\n"+prompt))
 	while not bool(pattern.match(data)):
-		data=(input(prompt))
+		print("\nВи ввели неправильне значення!")
+		data=(input("\n"+prompt))
 	return data
 
+
+def fill_array(number_elements):
+	numbers_list=list()
+	for i in range(number_elements):
+		numbers_list.append(number_validator("\nВведіть числове значеня " + str(i+1) + " елементу масиву : ", pattern))
+
+	return numbers_list
 
 def start1():
 	init()
 	number_elements=number_validator("\nВведіть розмірність початкового масиву : ", pattern)
+	how_to_enter_data=str(input("\nДля ручного введення даних натисніть Enter, будь-що інше для автоматичного заповнення масиву "))
 
-	numbers=array.array('q', [random.randrange(0, 1001, 1) for i in range(number_elements)])
-	final_numbers=array.array('q',[i for i in numbers])
+	if(how_to_enter_data==''):
+		not_final_numbers=fill_array(number_elements)
+		numbers=array.array('q', not_final_numbers)
+	else:
+		numbers=array.array('q', [random.randrange(0, 1001, 1) for i in range(number_elements)])
+
+	final_numbers=array.array('q', [i for i in numbers])
 
 	print("\nПочатковий масив з числами : ")
 	print(list(numbers))
