@@ -21,27 +21,34 @@ def init():
 def validator(pattern, prompt):
 	data=input(prompt)
 	while not bool(pattern.match(data)):
+		print("\nУвага! Ви ввели неправильне значення !")
 		data=input(prompt)
 	return data
 
 def start_line_validator(pattern, prompt, number_lines):
 	
 	number=int(validator(pattern, prompt))
-	while ((number<0) or (number>number_lines-1)):
-#	while number>number_lines-1:
+	while ((number<=0) or (number>number_lines-1)):
+		print("\nУвага! Ви ввели неправильне значення !")
 		number=int(validator(pattern, prompt))
 
 	return number
 
 def finish_line_validator(pattern, prompt, start_line_to_print, number_lines):
 	number=int(validator(pattern, prompt))
-	while ((number<=start_line_to_print) or  (number>number_lines-1)):
+	while ((number<=start_line_to_print) or  (number>number_lines)):
+		print("\nУвага! Ви ввели неправильне значення !")
 		number=int(validator(pattern, prompt))
 
 	return number
 	
 init()
 cont=''
+CGREEN='\033[32m'
+CCYAN='\033[36m'
+CEND='\033[0m'
+CRED='\033[91m'
+
 while cont=='':
 	cont=input("\nНатисніть Enter, щоб продовжити, будь-що інше, щоб завершити роботу з програмою ")
 	if(cont!=''): 
@@ -73,23 +80,23 @@ while cont=='':
 
 	file_lines = [line.strip() for line in file]
 
-	print("\nПерший рядок файлу : ")
+	print(CRED + "\nПерший рядок файлу : " + CEND)
 	print(file_lines[0])
 
-	print("\nП'ятий рядок файлу : ")
+	print(CRED + "\nП'ятий рядок файлу : " + CEND)
 	print(file_lines[4])
 
-	print("\nПерші 5 рядків файлу")
+	print(CRED + "\nПерші 5 рядків файлу" + CEND)
 	for i in range(5):
 		print(file_lines[i])
 
 	print('\n')
-	start_line_to_print=start_line_validator(pattern, "Введіть початковий номер рядка файлу : ", number_lines)
-	finish_line_to_print=finish_line_validator(pattern, "Введіть кінцевий номер рядка файлу : ", start_line_to_print, number_lines)
+	start_line_to_print=start_line_validator(pattern, "\nВведіть початковий номер рядка файлу : ", number_lines)-1
+	finish_line_to_print=finish_line_validator(pattern, "\nВведіть кінцевий номер рядка файлу : ", start_line_to_print, number_lines)-1
 
-	print("\nВміст файлу з " + str(start_line_to_print) + " до " + str(finish_line_to_print) + " рядку.")
+	print(CRED + "\nВміст файлу з " + str(start_line_to_print) + " до " + str(finish_line_to_print) + " рядку." + CEND)
 	for i in range(start_line_to_print, finish_line_to_print+1):
-		print(file_lines[i])
+		print(CGREEN + file_lines[i] + CEND)
 
 	file.close()
 
@@ -97,7 +104,7 @@ while cont=='':
 	print("\nВесь вміст файлу: ")
 	for i in range (0, number_lines):
 		s = file.readline()
-		print(s)
+		print(CCYAN + s + CEND)
 	"""file_lines = [line.strip() for line in file]
 
 	for i in range(len(file_lines)):
